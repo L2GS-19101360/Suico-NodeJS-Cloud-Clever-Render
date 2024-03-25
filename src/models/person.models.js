@@ -20,7 +20,7 @@ Person.findById = function(id, result){
 }
 
 Person.findAll = function(result) {
-    dbConn.query("SELECT * FROM person", function(err, res){
+    dbConn.query("SELECT * FROM Person", function(err, res){
         if (err){
             console.log("Error: ", err);
             result(null, err);
