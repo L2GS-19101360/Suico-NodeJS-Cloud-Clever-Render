@@ -8,6 +8,17 @@ const Person = function(person){
     this.updated = null
 }
 
+Person.findById = function(id, result){
+    dbConn.query("SELECT * FROM person WHERE id = ?", id, function(err, res){
+        if (err){
+            console.log("Error: ", err);
+            result(err, null);
+        } else{
+            result(null, res);
+        }
+    });
+}
+
 Person.findAll = function(result) {
     dbConn.query("SELECT * FROM person", function(err, res){
         if (err){
