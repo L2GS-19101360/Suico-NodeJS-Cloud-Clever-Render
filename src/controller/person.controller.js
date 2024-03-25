@@ -1,26 +1,42 @@
 'use strict';
 const Person = require('../models/person.models');
 
-exports.delete = function(req, res){
-    Person.delete(req.params.id, function(err, person){
-        if (err){
+exports.update = function (req, res) {
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
+        res.status(400).send({
+            error: true,
+            message: "Enter Valid Information"
+        });
+    } else {
+        Person.update(req.params.id, new Person(req.body), function(err, person){
+            if (err) {
+                res.send(err);
+            }
+            res.send({ status: 200, error: false, message: "Person Updated!" });
+        });
+    }
+};
+
+exports.delete = function (req, res) {
+    Person.delete(req.params.id, function (err, person) {
+        if (err) {
             res.send(err);
         }
         res.send({ status: 200, error: false, message: "Person Deleted!" });
     });
 };
 
-exports.create = function(req, res){
+exports.create = function (req, res) {
     const new_person = new Person(req.body);
 
-    if (req.body.constructor === Object && Object.keys(req.body).length === 0){
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
         res.status(400).send({
             error: true,
             message: "Enter Valid Information"
         });
-    }else{
-        Person.create(new_person, function(err, person){
-            if (err){
+    } else {
+        Person.create(new_person, function (err, person) {
+            if (err) {
                 res.send(err);
             }
             res.send({ status: 200, data: person, message: "Person Created!" });
@@ -28,18 +44,18 @@ exports.create = function(req, res){
     }
 };
 
-exports.findById = function(req, res){
-    Person.findById(req.params.id, function(err, person){
-        if (err){
+exports.findById = function (req, res) {
+    Person.findById(req.params.id, function (err, person) {
+        if (err) {
             res.send(err);
         }
         res.send({ status: 200, data: person });
     });
 };
 
-exports.findAll = function(req, res){
-    Person.findAll(function(err, person){
-        if (err){
+exports.findAll = function (req, res) {
+    Person.findAll(function (err, person) {
+        if (err) {
             res.send(err);
         }
         console.log('res', person);
