@@ -9,7 +9,7 @@ const Person = function(person){
 }
 
 Person.findById = function(id, result){
-    dbConn.query("SELECT * FROM person WHERE id = ?", id, function(err, res){
+    dbConn.query("SELECT * FROM Person WHERE id = ?", id, function(err, res){
         if (err){
             console.log("Error: ", err);
             result(err, null);
