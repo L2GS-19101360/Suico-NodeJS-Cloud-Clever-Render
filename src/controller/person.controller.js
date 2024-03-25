@@ -2,26 +2,17 @@
 const Person = require('../models/person.models');
 
 exports.update = function (req, res) {
-    if (Object.keys(req.body).length === 0) {
+    if (req.body.constructor === Object && Object.keys(req.body).length === 0) {
         res.status(400).send({
             error: true,
             message: "Enter Valid Information"
         });
     } else {
-        const updatedPerson = new Person(req.body);
-        Person.update(req.params.id, updatedPerson, function (err, person) {
+        Person.update(req.params.id, new Person(req.body), function(err, person){
             if (err) {
-                res.status(500).send({
-                    error: true,
-                    message: "Failed to update person."
-                });
-            } else {
-                res.status(200).send({
-                    error: false,
-                    message: "Person Updated!",
-                    data: person
-                });
+                res.send(err);
             }
+            res.send({ status: 200, error: false, message: "Person Updated!" });
         });
     }
 };
