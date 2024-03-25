@@ -8,6 +8,18 @@ const Person = function(person){
     this.updated = null
 }
 
+Person.create = function(newPerson, result){
+    dbConn.query("INSERT INTO Person set ?", newPerson, function(err, res){
+        if (err){
+            console.log("Error: ", err);
+            result(err, null);
+        }else{
+            console.log(res.insertId);
+            result(null, res.insertId);
+        }
+    });
+}
+
 Person.findById = function(id, result){
     dbConn.query("SELECT * FROM Person WHERE id = ?", id, function(err, res){
         if (err){
