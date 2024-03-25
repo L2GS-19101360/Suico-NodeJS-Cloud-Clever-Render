@@ -1,6 +1,15 @@
 'use strict';
 const Person = require('../models/person.models');
 
+exports.delete = function(req, res){
+    Person.delete(req.params.id, function(err, person){
+        if (err){
+            res.send(err);
+        }
+        res.send({ status: 200, error: false, message: "Person Deleted!" });
+    });
+};
+
 exports.create = function(req, res){
     const new_person = new Person(req.body);
 

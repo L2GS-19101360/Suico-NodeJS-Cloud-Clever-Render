@@ -5,5 +5,6 @@ const personController = require('../controller/person.controller');
 router.get('/', personController.findAll);
 router.get('/:id', personController.findById);
 router.post('/', personController.create);
+router.delete('/:id', personController.delete);
 
 module.exports = router;
