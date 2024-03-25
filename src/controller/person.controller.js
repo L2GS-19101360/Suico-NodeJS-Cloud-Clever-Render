@@ -11,9 +11,10 @@ exports.update = function (req, res) {
         const updatedPerson = new Person(req.body);
         Person.update(req.params.id, updatedPerson, function (err, person) {
             if (err) {
+                console.error("Error updating person:", err); // Log the error for debugging purposes
                 res.status(500).send({
                     error: true,
-                    message: "Failed to update person."
+                    message: "Failed to update person. " + err.message // Send the error message back to the client
                 });
             } else {
                 res.status(200).send({
